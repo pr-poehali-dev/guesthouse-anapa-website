@@ -4,17 +4,26 @@ import Icon from "@/components/ui/icon";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const HERO_IMAGE = "https://cdn.poehali.dev/projects/2c4086eb-2888-4451-9336-90d331018dad/bucket/910272b7-e552-4048-a8bc-70ecfdd769b5.jpeg";
-const ROOM_IMAGE = "/placeholder.svg";
+const ROOM_IMAGE = "https://cdn.poehali.dev/projects/2c4086eb-2888-4451-9336-90d331018dad/bucket/6a6db02f-cfd9-4126-88d5-a3f42a557481.jpeg";
 const BEACH_IMAGE = "/placeholder.svg";
+
+// Ценовые периоды: { от, до (не включительно), цена }
+const PRICE_PERIODS = [
+  { from: "2026-05-01", to: "2026-05-15", price: 1500 },
+  { from: "2026-05-15", to: "2026-05-20", price: 2000 },
+  { from: "2026-05-20", to: "2026-05-30", price: 2300 },
+];
+
+const DEFAULT_PRICE = 1500;
 
 const ROOMS = [
   {
     id: 1,
     name: "Стандарт",
-    description: "Уютный номер с видом на сад, двуспальная кровать, все удобства",
-    priceWeekday: 3500,
-    priceWeekend: 4500,
-    pricePeak: 5500,
+    description: "Уютный номер с двуспальной кроватью, кондиционером и всеми удобствами",
+    priceWeekday: 1500,
+    priceWeekend: 1500,
+    pricePeak: 2300,
     capacity: 2,
     size: 20,
     amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник"],
@@ -24,9 +33,9 @@ const ROOMS = [
     id: 2,
     name: "Семейный",
     description: "Просторный номер для семьи, две спальни, мини-кухня",
-    priceWeekday: 5500,
-    priceWeekend: 7000,
-    pricePeak: 8500,
+    priceWeekday: 1500,
+    priceWeekend: 1500,
+    pricePeak: 2300,
     capacity: 4,
     size: 35,
     amenities: ["Wi-Fi", "Кондиционер", "Кухня", "2 ванные"],
@@ -34,14 +43,14 @@ const ROOMS = [
   },
   {
     id: 3,
-    name: "Люкс Морской",
-    description: "Номер с панорамным видом на море, терраса, джакузи",
-    priceWeekday: 8000,
-    priceWeekend: 10000,
-    pricePeak: 13000,
+    name: "Люкс",
+    description: "Просторный номер повышенной комфортности с улучшенной отделкой",
+    priceWeekday: 1500,
+    priceWeekend: 1500,
+    pricePeak: 2300,
     capacity: 2,
-    size: 45,
-    amenities: ["Wi-Fi", "Джакузи", "Терраса", "Вид на море"],
+    size: 30,
+    amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник"],
     image: ROOM_IMAGE,
   },
 ];
@@ -112,20 +121,15 @@ const GALLERY_IMAGES = [HERO_IMAGE, ROOM_IMAGE, BEACH_IMAGE, ROOM_IMAGE, BEACH_I
 
 const BOOKED_DATES: string[] = [
   "2026-04-16", "2026-04-17", "2026-04-18", "2026-04-22", "2026-04-23",
-  "2026-05-01", "2026-05-02", "2026-05-03", "2026-05-08", "2026-05-09", "2026-05-10",
 ];
-
-const PEAK_MONTHS = [6, 7, 8];
 
 const MONTH_NAMES = ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"];
 const DAY_NAMES = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
 
-function getPriceForDate(date: Date, room: typeof ROOMS[0]) {
-  const month = date.getMonth() + 1;
-  const day = date.getDay();
-  if (PEAK_MONTHS.includes(month)) return room.pricePeak;
-  if (day === 0 || day === 6) return room.priceWeekend;
-  return room.priceWeekday;
+function getPriceForDate(date: Date) {
+  const dateStr = date.toISOString().split("T")[0];
+  const period = PRICE_PERIODS.find(p => dateStr >= p.from && dateStr < p.to);
+  return period ? period.price : DEFAULT_PRICE;
 }
 
 function formatDate(y: number, m: number, d: number) {
@@ -155,7 +159,6 @@ const Index = () => {
   const [bookingStart, setBookingStart] = useState<string | null>(null);
   const [bookingEnd, setBookingEnd] = useState<string | null>(null);
   const [activeGallery, setActiveGallery] = useState<number | null>(null);
-  const [season, setSeason] = useState<"low" | "mid" | "high">("mid");
 
   const heroRef = useSectionFade();
   const roomsRef = useSectionFade();
@@ -202,7 +205,7 @@ const Index = () => {
     for (let i = 0; i < days; i++) {
       const d = new Date(start);
       d.setDate(d.getDate() + i);
-      total += getPriceForDate(d, selectedRoom);
+      total += getPriceForDate(d);
     }
     return { days, total };
   };
@@ -399,8 +402,8 @@ const Index = () => {
                 const inRange = isInRange(dateStr);
                 const isPast = new Date(dateStr) < new Date(new Date().setHours(0, 0, 0, 0));
                 const date = new Date(dateStr);
-                const price = getPriceForDate(date, selectedRoom);
-                const isPeak = PEAK_MONTHS.includes(calMonth + 1);
+                const price = getPriceForDate(date);
+                const hasPeriod = PRICE_PERIODS.some(p => dateStr >= p.from && dateStr < p.to);
                 return (
                   <button
                     key={day}
@@ -416,9 +419,9 @@ const Index = () => {
                     ].join(" ")}
                   >
                     <span>{day}</span>
-                    {!isBooked && !isPast && (
-                      <span className={`text-[9px] mt-0.5 ${isPeak ? "text-sunset" : "text-sea-light/80"}`}>
-                        {(price / 1000).toFixed(1)}к
+                    {!isBooked && !isPast && hasPeriod && (
+                      <span className="text-[9px] mt-0.5 text-sunset">
+                        {price.toLocaleString()}₽
                       </span>
                     )}
                     {isBooked && <span className="text-[9px] text-red-300/80">занят</span>}
@@ -593,64 +596,46 @@ const Index = () => {
 
       {/* PRICE LIST */}
       <section id="price" ref={priceRef as any} className="py-24 px-4 bg-sand-light section-fade">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-sea text-sm tracking-[0.3em] uppercase mb-3">Прозрачные цены</p>
             <h2 className="font-cormorant text-5xl md:text-6xl font-light text-foreground">Прайс-лист</h2>
             <div className="w-20 h-0.5 bg-sea mx-auto mt-4" />
+            <p className="text-muted-foreground mt-4 text-sm">Актуальные цены на май 2026</p>
           </div>
 
-          <div className="flex flex-wrap gap-2 justify-center mb-8">
-            {(["low", "mid", "high"] as const).map((s) => (
-              <button key={s} onClick={() => setSeason(s)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all ${season === s ? "bg-sea text-white" : "bg-white text-foreground hover:bg-sea/10 border border-sand"}`}>
-                {s === "low" ? "Низкий сезон" : s === "mid" ? "Межсезонье" : "Высокий сезон"}
-              </button>
-            ))}
-          </div>
-
-          <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-sand/50">
+          <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-sand/50 mb-6">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
                   <tr className="bg-sea/10">
-                    <th className="text-left px-6 py-4 font-golos font-semibold text-foreground">Номер</th>
-                    <th className="text-center px-4 py-4 font-golos font-semibold text-foreground">Гости</th>
-                    <th className="text-right px-6 py-4 font-golos font-semibold text-foreground">Будни</th>
-                    <th className="text-right px-6 py-4 font-golos font-semibold text-foreground">Выходные</th>
-                    {season === "high" && <th className="text-right px-6 py-4 font-golos font-semibold text-sunset">Пик</th>}
+                    <th className="text-left px-6 py-4 font-golos font-semibold text-foreground">Период</th>
+                    <th className="text-center px-4 py-4 font-golos font-semibold text-foreground">Даты</th>
+                    <th className="text-right px-6 py-4 font-golos font-semibold text-foreground">Цена за ночь</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {ROOMS.map((room, idx) => {
-                    const mult = season === "low" ? 0.8 : 1;
-                    return (
-                      <tr key={room.id} className={idx % 2 === 0 ? "bg-white" : "bg-sand-light/50"}>
-                        <td className="px-6 py-5">
-                          <p className="font-semibold text-foreground">{room.name}</p>
-                          <p className="text-muted-foreground text-sm">{room.size} м²</p>
-                        </td>
-                        <td className="text-center px-4 py-5 text-muted-foreground">{room.capacity} чел.</td>
-                        <td className="text-right px-6 py-5 font-semibold text-foreground">
-                          {Math.round(room.priceWeekday * mult).toLocaleString()} ₽
-                        </td>
-                        <td className="text-right px-6 py-5 font-semibold text-terra">
-                          {Math.round(room.priceWeekend * mult).toLocaleString()} ₽
-                        </td>
-                        {season === "high" && (
-                          <td className="text-right px-6 py-5 font-semibold text-sunset">
-                            {room.pricePeak.toLocaleString()} ₽
-                          </td>
-                        )}
-                      </tr>
-                    );
-                  })}
+                  {[
+                    { label: "Начало мая", dates: "1 — 14 мая", price: 1500, color: "text-foreground" },
+                    { label: "Середина мая", dates: "15 — 19 мая", price: 2000, color: "text-terra" },
+                    { label: "Конец мая", dates: "20 — 29 мая", price: 2300, color: "text-sunset" },
+                  ].map((row, idx) => (
+                    <tr key={row.label} className={idx % 2 === 0 ? "bg-white" : "bg-sand-light/40"}>
+                      <td className="px-6 py-5">
+                        <p className="font-semibold text-foreground">{row.label}</p>
+                      </td>
+                      <td className="text-center px-4 py-5 text-muted-foreground text-sm">{row.dates}</td>
+                      <td className={`text-right px-6 py-5 font-bold text-xl font-cormorant ${row.color}`}>
+                        {row.price.toLocaleString()} ₽
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
           </div>
 
-          <div className="mt-6 grid sm:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-3 gap-4">
             {[
               { icon: "Percent", text: "Скидка 10% при бронировании от 7 ночей" },
               { icon: "Baby", text: "Дети до 5 лет — бесплатно" },
