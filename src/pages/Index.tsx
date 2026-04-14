@@ -19,51 +19,42 @@ const DEFAULT_PRICE = 1500;
 const ROOMS = [
   {
     id: 1,
-    name: "Стандарт",
-    description: "Уютный номер с двуспальной кроватью, кондиционером и всеми удобствами",
-    priceWeekday: 1500,
-    priceWeekend: 1500,
-    pricePeak: 2300,
+    name: "2-местный",
+    description: "Уютный номер на двоих с двуспальной или двумя раздельными кроватями",
     capacity: 2,
-    size: 20,
-    amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник"],
+    extraBed: true,
+    amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник", "Постельное", "Полотенца"],
     image: ROOM_IMAGE,
   },
   {
     id: 2,
-    name: "Семейный",
-    description: "Просторный номер для семьи, две спальни, мини-кухня",
-    priceWeekday: 1500,
-    priceWeekend: 1500,
-    pricePeak: 2300,
-    capacity: 4,
-    size: 35,
-    amenities: ["Wi-Fi", "Кондиционер", "Кухня", "2 ванные"],
+    name: "3-местный",
+    description: "Просторный номер для троих, идеально для семьи с ребёнком",
+    capacity: 3,
+    extraBed: true,
+    amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник", "Постельное", "Полотенца"],
     image: ROOM_IMAGE,
   },
   {
     id: 3,
-    name: "Люкс",
-    description: "Просторный номер повышенной комфортности с улучшенной отделкой",
-    priceWeekday: 1500,
-    priceWeekend: 1500,
-    pricePeak: 2300,
-    capacity: 2,
-    size: 30,
-    amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник"],
+    name: "4-местный",
+    description: "Большой номер для компании или семьи с детьми",
+    capacity: 4,
+    extraBed: true,
+    amenities: ["Wi-Fi", "Кондиционер", "Телевизор", "Холодильник", "Постельное", "Полотенца"],
     image: ROOM_IMAGE,
   },
 ];
 
 const SERVICES = [
-  { icon: "UtensilsCrossed", title: "Завтрак включён", desc: "Свежий домашний завтрак каждый день с 7:00 до 10:00" },
-  { icon: "Waves", title: "Выход к пляжу", desc: "Прямой выход на частный пляж, лежаки и зонты в подарок" },
-  { icon: "Car", title: "Парковка", desc: "Бесплатная охраняемая парковка на территории" },
-  { icon: "Wifi", title: "Быстрый Wi-Fi", desc: "Высокоскоростной интернет во всех номерах и зонах отдыха" },
-  { icon: "Sailboat", title: "Аренда лодок", desc: "Моторные и вёсельные лодки, морские прогулки" },
-  { icon: "Dumbbell", title: "Спортзал", desc: "Современный тренажёрный зал и площадка для волейбола" },
-  { icon: "Tent", title: "Барбекю-зона", desc: "Беседки с мангалом для семейного отдыха" },
-  { icon: "Baby", title: "Детский уголок", desc: "Игровая площадка и развлечения для самых маленьких" },
+  { icon: "Waves", title: "370 м до пляжа", desc: "Пешком 5 минут до песчаного пляжа" },
+  { icon: "Wifi", title: "Быстрый Wi-Fi", desc: "Высокоскоростной интернет во всех номерах" },
+  { icon: "Wind", title: "Кондиционер", desc: "Кондиционер в каждом номере" },
+  { icon: "Flame", title: "Мангал", desc: "Аренда мангала — 1 500 ₽/сутки. Шашлыки в удовольствие!" },
+  { icon: "BedDouble", title: "Бельё включено", desc: "Постельное бельё и полотенца предоставляются" },
+  { icon: "Sparkles", title: "Уборка номера", desc: "При длительном заселении — уборка каждые 3 дня" },
+  { icon: "TreePine", title: "Парк рядом", desc: "Парк «Ореховая роща» в пешей доступности" },
+  { icon: "Landmark", title: "Набережная", desc: "Живописная набережная Высокий берег в шаговой доступности" },
 ];
 
 const REVIEWS = [
@@ -71,21 +62,21 @@ const REVIEWS = [
     name: "Анна Соколова",
     date: "Август 2024",
     rating: 5,
-    text: "Восхитительное место! Номер «Люкс Морской» оправдал все ожидания — вид с террасы просто невероятный. Хозяева очень радушные, завтраки домашние и вкусные. Обязательно вернёмся!",
+    text: "Отличный гостевой дом! Чисто, уютно, хозяева очень отзывчивые. До пляжа рукой подать — всего 5 минут пешком. Жарили шашлыки на мангале — незабываемый вечер. Вернёмся обязательно!",
     city: "Москва",
   },
   {
     name: "Дмитрий и Марина",
     date: "Июль 2024",
     rating: 5,
-    text: "Отдыхали семьёй с двумя детьми. Семейный номер — просто находка: места много, кухня есть, дети в восторге от пляжа. Персонал всегда готов помочь. Спасибо за незабываемый отдых!",
+    text: "Снимали 4-местный номер всей семьёй. Места достаточно, бельё чистое, кондиционер работает отлично. Рядом парк и набережная — гуляли каждый вечер. Очень понравилось!",
     city: "Санкт-Петербург",
   },
   {
     name: "Светлана К.",
     date: "Июнь 2024",
     rating: 5,
-    text: "Уже третий год приезжаем сюда. Атмосфера как у бабушки на даче, только у моря. Тишина, чистота, вкусная еда. Лучшее место для перезагрузки!",
+    text: "Уже второй год приезжаем в «Уютный уголок». Тихо, спокойно, персонал приветливый. Номер всегда чистый, полотенца меняют. Ореховая роща рядом — красота!",
     city: "Краснодар",
   },
 ];
@@ -96,24 +87,32 @@ const FAQ_ITEMS = [
     a: "Заезд с 14:00, выезд до 12:00. Ранний заезд и поздний выезд возможны по предварительной договорённости при наличии свободных номеров.",
   },
   {
-    q: "Включены ли завтраки в стоимость?",
-    a: "Да, завтрак включён в стоимость всех номеров. Подаётся с 7:00 до 10:00 в столовой первого этажа. Обед и ужин заказываются отдельно.",
+    q: "Питание включено в стоимость?",
+    a: "Нет, питание не включено. В шаговой доступности от гостевого дома есть магазины и кафе. На территории есть мангал — можно приготовить самостоятельно.",
   },
   {
-    q: "Можно ли привозить домашних животных?",
-    a: "Небольших домашних животных принимаем с доплатой 500 руб/сутки. Просим заранее уведомить при бронировании.",
+    q: "Как часто убирают номер?",
+    a: "При коротких заездах уборка производится при выезде. При длительном проживании — уборка номера каждые 3 дня.",
   },
   {
     q: "Есть ли парковка?",
-    a: "Да, бесплатная охраняемая парковка на территории гостевого дома на 20 мест. Место не нужно бронировать заранее.",
+    a: "Нет, собственной парковки при гостевом доме нет. Можно оставить автомобиль на улице рядом с домом.",
   },
   {
-    q: "Как добраться от ж/д вокзала?",
-    a: "Расстояние от вокзала — 4 км. Можно добраться на такси (~200 руб) или автобусе №15 (остановка «Морская»). Встреча гостей по предварительной договорённости.",
+    q: "Что входит в стоимость номера?",
+    a: "В стоимость входят: проживание, постельное бельё, полотенца, Wi-Fi, кондиционер. Питание не включено. Дополнительное место — 1 000 ₽/сутки.",
   },
   {
-    q: "Как оплатить бронирование?",
-    a: "Принимаем онлайн-оплату картой, наличные при заезде. Предоплата 30% для подтверждения бронирования в высокий сезон.",
+    q: "Можно ли арендовать мангал?",
+    a: "Да! Аренда мангала — 1 500 ₽/сутки. Включает мангал и принадлежности. Уголь и продукты приобретаются самостоятельно.",
+  },
+  {
+    q: "Как далеко пляж?",
+    a: "До ближайшего песчаного пляжа 370 метров — это около 5 минут пешком. Рядом также набережная «Высокий берег» и парк «Ореховая роща».",
+  },
+  {
+    q: "Сколько этажей в гостевом доме?",
+    a: "Гостевой дом трёхэтажный. Номера расположены на всех трёх этажах.",
   },
 ];
 
@@ -292,7 +291,7 @@ const Index = () => {
             </button>
           </div>
           <div className="flex justify-center gap-8 mt-16 animate-fade-in" style={{ animationDelay: "0.8s" }}>
-            {[["15", "лет у моря"], ["12", "уютных номеров"], ["4.9★", "рейтинг"]].map(([num, label]) => (
+            {[["3", "этажа"], ["370м", "до пляжа"], ["4.9★", "рейтинг"]].map(([num, label]) => (
               <div key={label} className="text-center">
                 <div className="font-cormorant text-3xl font-semibold text-white">{num}</div>
                 <div className="text-sand-light/80 text-xs uppercase tracking-wider">{label}</div>
@@ -319,15 +318,15 @@ const Index = () => {
                 <div className="relative overflow-hidden h-56">
                   <img src={room.image} alt={room.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-4 right-4 bg-terra text-white text-xs font-medium px-3 py-1 rounded-full">
-                    от {room.priceWeekday.toLocaleString()} ₽/ночь
+                    от 1 500 ₽/ночь
                   </div>
                 </div>
                 <div className="p-6">
-                  <h3 className="font-cormorant text-2xl font-semibold text-foreground mb-2">{room.name}</h3>
+                  <h3 className="font-cormorant text-2xl font-semibold text-foreground mb-1">{room.name}</h3>
                   <p className="text-muted-foreground text-sm mb-4">{room.description}</p>
-                  <div className="flex gap-4 text-sm text-muted-foreground mb-4">
+                  <div className="flex gap-4 text-sm text-muted-foreground mb-3">
                     <span className="flex items-center gap-1"><Icon name="Users" size={14} /> {room.capacity} чел.</span>
-                    <span className="flex items-center gap-1"><Icon name="Maximize" size={14} /> {room.size} м²</span>
+                    <span className="flex items-center gap-1 text-terra"><Icon name="Plus" size={14} /> доп. место 1 000 ₽</span>
                   </div>
                   <div className="flex flex-wrap gap-2 mb-5">
                     {room.amenities.map(a => (
@@ -502,15 +501,16 @@ const Index = () => {
               <h2 className="font-cormorant text-5xl md:text-6xl font-light text-foreground mb-6">О нас</h2>
               <div className="w-20 h-0.5 bg-sea mb-8" />
               <p className="text-muted-foreground leading-relaxed mb-4">
-                Гостевой дом «Морской Берег» — это семейное дело, которое начиналось с маленького дома с садом прямо у моря.
-                Вот уже 15 лет мы принимаем гостей, которые ищут настоящий отдых: без суеты, с домашней едой и живой атмосферой.
+                «Уютный уголок» — трёхэтажный гостевой дом в шаговой доступности от моря. Мы принимаем гостей,
+                которые ценят тишину, чистоту и домашнюю атмосферу без лишней суеты.
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
-                Мы верим, что лучший отдых — это когда ты чувствуешь себя как дома, но при этом тебя окружает море, солнце и
-                забота хозяев. Каждый номер обустроен с любовью, а завтраки готовятся из свежих местных продуктов.
+                До пляжа всего 370 метров — 5 минут пешком. Рядом живописная набережная «Высокий берег»,
+                парк «Ореховая роща» и все необходимые магазины. Каждый номер оснащён кондиционером,
+                постельное бельё и полотенца предоставляются.
               </p>
               <div className="grid grid-cols-3 gap-4">
-                {[["2009", "год основания"], ["1200+", "довольных семей"], ["100м", "до пляжа"]].map(([n, l]) => (
+                {[["3", "этажа"], ["370м", "до пляжа"], ["2–4", "места в номере"]].map(([n, l]) => (
                   <div key={l} className="text-center p-4 bg-sand-light rounded-2xl">
                     <div className="font-cormorant text-3xl font-semibold text-sea-dark">{n}</div>
                     <div className="text-muted-foreground text-xs mt-1">{l}</div>
@@ -521,8 +521,8 @@ const Index = () => {
             <div className="relative">
               <img src={BEACH_IMAGE} alt="Пляж" className="rounded-3xl w-full h-80 object-cover shadow-xl" />
               <div className="absolute -bottom-6 -left-6 bg-terra text-white p-6 rounded-2xl shadow-lg max-w-xs">
-                <div className="font-cormorant text-2xl font-semibold mb-1">«Море лечит»</div>
-                <div className="text-white/80 text-sm">Семья Ковалёвых, хозяева</div>
+                <div className="font-cormorant text-2xl font-semibold mb-1">«Отдыхайте с комфортом»</div>
+                <div className="text-white/80 text-sm">Гостевой дом «Уютный уголок»</div>
               </div>
             </div>
           </div>
@@ -676,10 +676,10 @@ const Index = () => {
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
-                { icon: "Waves", name: "Пляж «Золотой»", dist: "100 м" },
-                { icon: "Anchor", name: "Яхт-клуб", dist: "400 м" },
-                { icon: "ShoppingBag", name: "Рынок", dist: "700 м" },
-                { icon: "Footprints", name: "Набережная", dist: "1.2 км" },
+                { icon: "Waves", name: "Пляж", dist: "370 м" },
+                { icon: "Landmark", name: "Набережная «Высокий берег»", dist: "рядом" },
+                { icon: "TreePine", name: "Парк «Ореховая роща»", dist: "рядом" },
+                { icon: "ShoppingBag", name: "Магазины", dist: "рядом" },
               ].map((poi) => (
                 <div key={poi.name} className="flex items-center gap-3 bg-white rounded-xl p-4 border border-sand/50">
                   <div className="w-9 h-9 bg-sea/10 rounded-lg flex items-center justify-center flex-shrink-0">
