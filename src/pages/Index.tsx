@@ -3,9 +3,9 @@ import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-const HERO_IMAGE = "https://cdn.poehali.dev/projects/2c4086eb-2888-4451-9336-90d331018dad/files/6037af97-3601-45a5-81b6-b8e2f9941306.jpg";
-const ROOM_IMAGE = "https://cdn.poehali.dev/projects/2c4086eb-2888-4451-9336-90d331018dad/files/ba3dd288-4a6b-4636-a5bd-520b737b3c3c.jpg";
-const BEACH_IMAGE = "https://cdn.poehali.dev/projects/2c4086eb-2888-4451-9336-90d331018dad/files/67aaa0b6-f362-469a-933d-7f937f90c381.jpg";
+const HERO_IMAGE = "/placeholder.svg";
+const ROOM_IMAGE = "/placeholder.svg";
+const BEACH_IMAGE = "/placeholder.svg";
 
 const ROOMS = [
   {
@@ -232,7 +232,7 @@ const Index = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 glass">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           <button onClick={() => scrollTo("#home")} className="font-cormorant text-2xl font-semibold text-sea-dark flex items-center gap-2">
-            <span>🌊</span> Морской Берег
+            <span>🏡</span> Уютный уголок
           </button>
           <div className="hidden lg:flex items-center gap-6">
             {navLinks.map(l => (
@@ -273,7 +273,7 @@ const Index = () => {
         <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
           <p className="text-sand-light/90 tracking-[0.3em] uppercase text-sm font-golos mb-4 animate-fade-in">Гостевой дом на черноморском побережье</p>
           <h1 className="font-cormorant text-6xl md:text-8xl font-light text-white text-shadow mb-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Морской Берег
+            Уютный уголок
           </h1>
           <p className="text-sand-light/90 text-lg md:text-xl font-golos max-w-2xl mx-auto mb-10 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             Где волны убаюкивают, солнце греет душу, а время течёт иначе
@@ -684,7 +684,7 @@ const Index = () => {
                 <div className="w-12 h-12 bg-terra rounded-full flex items-center justify-center mx-auto mb-3 animate-float shadow-lg">
                   <Icon name="MapPin" size={24} className="text-white" />
                 </div>
-                <p className="font-cormorant text-2xl text-sea-dark font-semibold">Гостевой дом «Морской Берег»</p>
+                <p className="font-cormorant text-2xl text-sea-dark font-semibold">Гостевой дом «Уютный уголок»</p>
                 <p className="text-sea-dark/70 text-sm mt-1">г. Анапа, ул. Морская, 15</p>
                 <p className="text-sea text-xs mt-2">100 метров от пляжа</p>
               </div>
@@ -785,7 +785,7 @@ const Index = () => {
       <footer className="bg-sea-dark text-white py-12 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 pb-8 border-b border-white/10">
-            <div className="font-cormorant text-3xl font-light">🌊 Морской Берег</div>
+            <div className="font-cormorant text-3xl font-light">🏡 Уютный уголок</div>
             <div className="flex flex-wrap gap-6 text-sm text-white/70 justify-center">
               {navLinks.map(l => (
                 <button key={l.href} onClick={() => scrollTo(l.href)} className="hover:text-white transition-colors">
@@ -795,7 +795,7 @@ const Index = () => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/50">
-            <p>© 2026 Гостевой дом «Морской Берег». Все права защищены.</p>
+            <p>© 2026 Гостевой дом «Уютный уголок». Все права защищены.</p>
             <p>г. Анапа, ул. Морская, 15 · +7 (861) 234-56-78</p>
           </div>
         </div>
