@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Icon from "@/components/ui/icon";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
-const HERO_IMAGE = "/placeholder.svg";
+const HERO_IMAGE = "https://cdn.poehali.dev/projects/2c4086eb-2888-4451-9336-90d331018dad/bucket/910272b7-e552-4048-a8bc-70ecfdd769b5.jpeg";
 const ROOM_IMAGE = "/placeholder.svg";
 const BEACH_IMAGE = "/placeholder.svg";
 
